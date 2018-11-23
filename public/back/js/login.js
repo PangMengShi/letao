@@ -33,6 +33,9 @@ $(function() {
               min:2,
               max:6,
               message:"用户名长度必须是2-6位"
+            },
+            callback:{
+              message:"用户名不存在"
             }
           }
        },
@@ -46,6 +49,11 @@ $(function() {
              min:6,
              max:12,
              message:"密码必须是6-12位"
+           },
+           //专门用于ajax回调提示的说明
+           callback:{
+             message:"密码错误"
+
            }
          }
        }
@@ -73,11 +81,14 @@ $(function() {
           }
           if(info.error === 1000){
             //用户名不存在
-            alert(info.message);
+            //参数1:字段名称
+            //参数2:校验状态
+            //参数3:配置规则,用于提示
+            $('#form').data("bootstrapValidator").updateStatus("username","INVALID","callback")
           }
           if(info.error === 1001){
             //密码错误
-            alert(info.message);
+            $('#form').data("bootstrapValidator").updateStatus("password","INVALID","callback");
           }
       }
     })
